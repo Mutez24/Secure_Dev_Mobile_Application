@@ -34,8 +34,18 @@ The file cannot be found inside the app or the root project but while running th
 
 Polyencryption/decryption encrypt/decrypt a string by changing the ascii values of every characters of the string depending on a key. So even if someone has access to the code, he needs to have the right key to decrypt the datas. So obviously the key to encrypt data is not stored in plain text in the code. In fact, we use the password input by the user from the main page as a key to encrypt file's data, that way the key is never stored in brut and nobody can access it. Note that if the user enter a wrong password, files will not be encrypted with a wrong key since the user needs to enter a good password to have access to the accounts page that lunch all the procedures to encrypt or decrypt files.
 
-So to securely svae user's data, we save the datas in files that are in the internal storage. Thos files are encrypted and decrypted with functions that take the password of the user as a parameter. This way is is not possible to decrypt the datas except if you know the password.
+So to securely save user's data, we save the datas in files that are in the internal storage. Those files are encrypted and decrypted with functions that take the password of the user as a parameter. This way is is not possible to decrypt the datas except if you know the password.
 
 ## How did you hide the API url ?
 
+To begin about the API url, the connection to the API is made with HTTPS protocol which uses TLS. This way the connection between the application and the API is more secured.
+
+Now to hide the API url, we use 3 techniques:
+1. We obfuscate the code by modifying minifyEnable to true in the gradle module file. Obfuscation shortens the name of classes and members which makes it less understandable for a human.
+2. We put the API url in a native C/C++ file. Native development kit (NDK) uses C/C++ files that cannot be decompile easily which make the API url harder to find. Although the NDK compile code can still be opened with a hexadecimal editor. So this makes the work for the hacker much more difficult, but still it is possible to access those file.
+3. To make sure the hacker will not have access to the API url, we don't store the API url in brut. We encrypt the API url with our Polyencryption function that takes the password as a parameter, and we store it encrypted in the native C/C++ file. That way hackers can only decrypt the API url if they know the password. Furthermore, it is not a problem if the user enter a wrong password for the same reason as for the previous part.
+
 ## Screenshots of your application 
+
+Since it's not pratical to put screen shot in the read me file, you can find all the screen shot of my application in the file "ScreenShot_User_Experience.pdf". In this file you will find several cases of how the application can be used.
+
